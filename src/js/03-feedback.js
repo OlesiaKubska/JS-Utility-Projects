@@ -4,7 +4,7 @@ const form = document.querySelector('.feedback-form');
 const emailInput = form.querySelector('input[name="email"]');
 const messageInput = form.querySelector('textarea[name="message"]');
 
-const localStorageKey = 'feedback-form-state';
+const localStorageKey = 'feedback-form-state'; //Нехай ключем для сховища буде рядок "feedback-form-state"
 
 //функція "saveState" зберігає поточний стан форми в локальному сховищі
 //Функція "throttle" допомагає затримати виконання цієї функції на 500 мілісекунд, щоб запобігти збільшенню навантаження на браузер
@@ -28,9 +28,10 @@ const loadState = () => {
 
 //Функція "clearState" видаляє збережений стан форми з локального сховища та очищає поля введення форми
 const clearState = () => {
-    localStorage.removeItem(localStorageKey);
+    localStorage.removeItem(localStorageKey); //Видаляється збережений стан форми з локального сховища
     emailInput.value = '';
-    messageInput.value = '';
+    messageInput.value = ''; //Очищаються поля введення форми;
+    //Виводиться в консоль об'єкт з полями email та message та їхніми поточними значеннями.
     console.log({
         email: emailInput.value,
         message: messageInput.value,
@@ -43,4 +44,4 @@ form.addEventListener('submit', event => {
     clearState();
 });
 
-loadState();
+loadState(); //функція loadState() викликається при завантаженні сторінки для перевірки наявності збереженого стану форми та заповнення полів вводу, якщо вони є
