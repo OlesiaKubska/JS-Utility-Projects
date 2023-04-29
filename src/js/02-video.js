@@ -8,7 +8,8 @@ const player = new Player(iframe); //конструктор класу Player з
 //відстеження події timeupdate, яка виникає при оновленні часу відтворення. Можна зробити це, скориставшись методом on():
 player.on('timeupdate', throttle(() => {
   // зберігаємо поточний час відтворення в локальне сховище
-    localStorage.setItem('videoplayer-current-time', player.getCurrentTime());
+  const currentTime = player.getCurrentTime();
+  localStorage.setItem('videoplayer-current-time', currentTime);
 }, 1000));
 //Функція getCurrentTime() повертає поточний час відтворення у секундах
 
