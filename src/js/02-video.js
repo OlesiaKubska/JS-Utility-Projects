@@ -5,19 +5,22 @@ import throttle from 'lodash.throttle';
 const iframe = document.querySelector('iframe');
 const player = new Player(iframe); //конструктор класу Player з бібліотеки Vimeo, який створює новий плеєр з переданим елементом iframe.
 
-//відстеження події timeupdate, яка виникає при оновленні часу відтворення. Можна зробити це, скориставшись методом on():
-player.on('timeupdate', throttle(() => {
-  // зберігаємо поточний час відтворення в локальне сховище
-  const currentTime = player.getCurrentTime();
-  localStorage.setItem('videoplayer-current-time', currentTime);
-}, 1000));
-//Функція getCurrentTime() повертає поточний час відтворення у секундах
+const onPlay = function (data) {
+  localStorage.setItem('videoplayer-current-time', data.seconds);
+};
+//на події 'timeupdate' плеєра, функція onPlay зберігає поточний час відтворення в локальному сховищі браузера з допомогою методу localStorage.setItem
+player.on('timeupdate', throttle(onPlay, 1000));
+//код отримує збережений час відтворення з локального сховища браузера за допомогою методу localStorage.getItem
+const currentTime = Number(localStorage.getItem('videoplayer-current-time'));
 
-//відновлювати відтворення з збереженої позиції під час перезавантаження сторінки робимо методом setCurrentTime():
-const savedTime = localStorage.getItem('videoplayer-current-time');
-
-if (savedTime) {
-    player.setCurrentTime(savedTime);
-}
-
-//спочатку зчитує час відтворення з локального сховища, а потім встановлює його за допомогою методу setCurrentTime().
+//За допомогою методу player.setCurrentTime час відтворення плеєра встановлюється на збережене значення.
+player.setCurrentTime(currentTime).then(function (seconds) {
+    
+}).catch(function (error) {
+  switch (error.name) {
+    case 'RangeError':
+      break;
+      default:
+      break;
+    }
+}); //У разі виникнення помилки RangeError, код обробляє її відповідним чином.
