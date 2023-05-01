@@ -29,13 +29,14 @@ const loadState = () => {
 //Функція "clearState" видаляє збережений стан форми з локального сховища та очищає поля введення форми
 const clearState = () => {
     localStorage.removeItem(localStorageKey); //Видаляється збережений стан форми з локального сховища
-    emailInput.value = '';
-    messageInput.value = ''; //Очищаються поля введення форми;
+    
     //Виводиться в консоль об'єкт з полями email та message та їхніми поточними значеннями.
     console.log({
         email: emailInput.value,
         message: messageInput.value,
     });
+    emailInput.value = '';
+    messageInput.value = ''; //Очищаються поля введення форми;
 };
 
 form.addEventListener('input', saveState); //Обробник події "input" викликає функцію "saveState" при кожному введенні користувача, а обробник події "submit" викликає функцію "clearState" для видалення збереженого стану форми та очищення її полів введення.
